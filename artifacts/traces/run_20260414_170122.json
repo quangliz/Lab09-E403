@@ -1,0 +1,58 @@
+{
+  "task": "Nhân viên vừa vào thử việc (trong probation period) muốn làm remote vì lý do cá nhân. Điều kiện là gì?",
+  "route_reason": "Yêu cầu về điều kiện làm việc từ xa cho nhân viên thử việc không nằm trong các trường hợp rủi ro cao hay yêu cầu chính sách cụ thể nào. Đây là một câu hỏi thông thường về quy định làm việc, do đó có thể được xử lý bởi bộ phận hỗ trợ khách hàng.",
+  "risk_high": false,
+  "needs_tool": false,
+  "hitl_triggered": false,
+  "retrieved_chunks": [
+    {
+      "text": "4.1 Điều kiện remote:\n- Nhân viên sau probation period có thể làm remote tối đa 2 ngày/tuần.\n- Team Lead phải phê duyệt lịch remote qua HR Portal.\n- Ngày onsite bắt buộc: Thứ 3 và Thứ 5 theo lịch team.",
+      "source": "hr_leave_policy.txt",
+      "score": 0.7236,
+      "metadata": {
+        "source": "hr_leave_policy.txt"
+      }
+    },
+    {
+      "text": "4.2 Yêu cầu kỹ thuật khi remote:\n- Kết nối VPN bắt buộc khi làm việc với hệ thống nội bộ.\n- Camera bật trong các cuộc họp team.",
+      "source": "hr_leave_policy.txt",
+      "score": 0.5737,
+      "metadata": {
+        "source": "hr_leave_policy.txt"
+      }
+    },
+    {
+      "text": "=== Phần 4: Remote work policy ===",
+      "source": "hr_leave_policy.txt",
+      "score": 0.5569,
+      "metadata": {
+        "source": "hr_leave_policy.txt"
+      }
+    }
+  ],
+  "retrieved_sources": [
+    "hr_leave_policy.txt"
+  ],
+  "policy_result": {},
+  "mcp_tools_used": [],
+  "final_answer": "Nhân viên trong thời gian thử việc (probation period) không đủ điều kiện để làm remote. Điều kiện làm remote chỉ áp dụng cho nhân viên sau khi hoàn thành probation period, với tối đa 2 ngày/tuần và cần sự phê duyệt của Team Lead qua HR Portal [1].",
+  "sources": [
+    "hr_leave_policy.txt"
+  ],
+  "confidence": 0.62,
+  "history": [
+    "[supervisor] received task: Nhân viên vừa vào thử việc (trong probation period) muốn làm remote vì lý do cá ",
+    "[supervisor] route=retrieval_worker reason=Yêu cầu về điều kiện làm việc từ xa cho nhân viên thử việc không nằm trong các trường hợp rủi ro cao hay yêu cầu chính sách cụ thể nào. Đây là một câu hỏi thông thường về quy định làm việc, do đó có thể được xử lý bởi bộ phận hỗ trợ khách hàng.",
+    "[retrieval_worker] retrieved 3 chunks from ['hr_leave_policy.txt']",
+    "[synthesis_worker] answer generated, confidence=0.62, sources=['hr_leave_policy.txt']",
+    "[graph] completed in 4603ms"
+  ],
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "retrieval_worker",
+  "latency_ms": 4603,
+  "run_id": "run_20260414_170122",
+  "question_id": "q14"
+}

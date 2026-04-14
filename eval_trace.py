@@ -356,4 +356,8 @@ if __name__ == "__main__":
         report_file = save_eval_report(comparison)
         print(f"\n📄 Eval report → {report_file}")
         print("\n✅ Sprint 4 complete!")
+<<<<<<< HEAD
         print("   Next: Điền docs/ templates và viết reports/")
+=======
+        print("   Next: Điền docs/ templates và viết reports/")
+>>>>>>> f81a0ae (add sprint 3 + 4)

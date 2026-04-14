@@ -36,33 +36,54 @@ def _call_llm(messages: list) -> str:
     Gọi LLM để tổng hợp câu trả lời.
     TODO Sprint 2: Implement với OpenAI hoặc Gemini.
     """
-    # Option A: OpenAI
     try:
-        from openai import OpenAI
-        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=messages,
-            temperature=0.1,  # Low temperature để grounded
-            max_tokens=500,
-        )
-        return response.choices[0].message.content
-    except Exception:
-        pass
+        from langchain_openai import ChatOpenAI
+        from langchain_core.messages import SystemMessage, HumanMessage
 
-    # Option B: Gemini
-    try:
-        import google.generativeai as genai
-        genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        combined = "\n".join([m["content"] for m in messages])
-        response = model.generate_content(combined)
-        return response.text
-    except Exception:
-        pass
+        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.1)
+        
+        langchain_messages = []
+        for msg in messages:
+            if msg["role"] == "system":
+                langchain_messages.append(SystemMessage(content=msg["content"]))
+            elif msg["role"] == "user":
+                langchain_messages.append(HumanMessage(content=msg["content"]))
+        
+        response = llm.invoke(langchain_messages)
+        return response.content
+    except Exception as e:
+        return f"[SYNTHESIS ERROR] Không thể gọi LLM. Lỗi: {str(e)}"
 
-    # Fallback: trả về message báo lỗi (không hallucinate)
-    return "[SYNTHESIS ERROR] Không thể gọi LLM. Kiểm tra API key trong .env."
+    # """
+    # OLD CODE (Commented out):
+    # # Option A: OpenAI
+    # try:
+    #     from openai import OpenAI
+    #     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    #     response = client.chat.completions.create(
+    #         model="gpt-4o-mini",
+    #         messages=messages,
+    #         temperature=0.1,  # Low temperature để grounded
+    #         max_tokens=500,
+    #     )
+    #     return response.choices[0].message.content
+    # except Exception:
+    #     pass
+    # 
+    # # Option B: Gemini
+    # try:
+    #     import google.generativeai as genai
+    #     genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+    #     model = genai.GenerativeModel("gemini-1.5-flash")
+    #     combined = "\n".join([m["content"] for m in messages])
+    #     response = model.generate_content(combined)
+    #     return response.text
+    # except Exception:
+    #     pass
+    # 
+    # # Fallback: trả về message báo lỗi (không hallucinate)
+    # return "[SYNTHESIS ERROR] Không thể gọi LLM. Kiểm tra API key trong .env."
+    # """
 
 
 def _build_context(chunks: list, policy_result: dict) -> str:
@@ -203,6 +224,8 @@ def run(state: dict) -> dict:
 # ─────────────────────────────────────────────
 
 if __name__ == "__main__":
+    from dotenv import load_dotenv
+    load_dotenv()
     print("=" * 50)
     print("Synthesis Worker — Standalone Test")
     print("=" * 50)

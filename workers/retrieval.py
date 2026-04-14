@@ -17,6 +17,9 @@ Gọi độc lập để test:
 
 import os
 import sys
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # ─────────────────────────────────────────────
 # Worker Contract (xem contracts/worker_contracts.yaml)
@@ -68,16 +71,16 @@ def _get_collection():
     TODO Sprint 2: Đảm bảo collection đã được build từ Step 3 trong README.
     """
     import chromadb
-    client = chromadb.PersistentClient(path="./chroma_db")
+    client = chromadb.PersistentClient(path=os.path.abspath(os.path.join(os.path.dirname(__file__), "../../chroma_db")))
     try:
-        collection = client.get_collection("day09_docs")
+        collection = client.get_collection("lab_rag")
     except Exception:
         # Auto-create nếu chưa có
         collection = client.get_or_create_collection(
-            "day09_docs",
+            "lab_rag",
             metadata={"hnsw:space": "cosine"}
         )
-        print(f"⚠️  Collection 'day09_docs' chưa có data. Chạy index script trong README trước.")
+        print(f"⚠️  Collection 'lab_rag' chưa có data. Chạy index script trong README trước.")
     return collection
 
 
